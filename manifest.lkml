@@ -7,5 +7,5 @@ project_name: "data_science"
   project: "core"
  }
 local_dependency: {
-  project: "source"
+  project: "cube"
 }

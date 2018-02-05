@@ -46,3 +46,15 @@ explore: ga_data_parsed {
     sql_on: datediff(days, ${olr_courses.begin_date_date}, ${ga_data_parsed.hit_date}) = ${dim_relative_to_start_date.days} ;;
   }
 }
+
+
+explore: flat_studentinteractions_4m_ga
+{
+  label: "Flat Student Interactions"
+  extends: [dim_course]
+  join: dim_course {   # we need the dim_start_date join from the dim_course explore
+    relationship: many_to_one
+    sql_on: ${flat_studentinteractions_4m_ga.coursekey} = ${dim_course.coursekey} ;;
+  }
+
+}

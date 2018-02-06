@@ -6,7 +6,14 @@ view: flat_studentinteractions_4m_ga {
     explore_source: ga_data_parsed {
       column: userssoguid {}
       column: daysname { field: dim_relative_to_start_date.daysname }
+      column: session_count {}
+      column: environment {}
+      column: productplatform {}
       column: coursekey {}
+      column: localtime_timestamp_tz_time {}
+      column: coretextisbn {}
+      column: reading_page_count {}
+      column: reading_page_view {}
       column: activitybuilder_launch_sum {}
       column: alg_launch_sum {}
       column: aplia_launch_sum {}
@@ -159,8 +166,10 @@ view: flat_studentinteractions_4m_ga {
       column: weblinks_activity_launch_sum {}
       column: weblinks_launch_sum {}
       column: youseeu_launch_sum {}
-      column: localtime_timestamp_tz_time {}
-      column: coretextisbn {}
+      column: total_pages {}
+      column: total_pages_read {}
+      column: total_pages_viewed {}
+      column: intensity {}
     }
 
     sql_trigger_value: select count(*) from raw_ga.ga_data_parsed ;;
@@ -640,4 +649,35 @@ view: flat_studentinteractions_4m_ga {
     value_format: "\D\a\y 0"
     type: number
   }
+  dimension: session_count {
+    type: number
+  }
+  dimension: environment {}
+  dimension: productplatform {}
+
+  dimension: reading_page_count {
+    type: number
+  }
+  dimension: reading_page_view {
+    type: number
+  }
+
+  dimension: intensity {
+    type: number
+  }
+
+  dimension: total_pages {
+    type: number
+  }
+  dimension: total_pages_read {
+    type: number
+  }
+  dimension: total_pages_viewed {
+    type: number
+  }
+
+  #TODO calculate measures max_page_viewed, max_total_pages, actual_pages_viewed, page_reread_ratio
+
+
+
 }

@@ -30,29 +30,53 @@ include: "/cube/dim_*.view.lkml"
 #
 # }
 
-explore: ga_data_parsed {
-  label: "Google Analytics Data"
-  from: ri_events_from_ga
-  view_name: ga_data_parsed
+
+
+
+
+
+#DEFINITION METHOD 2 from is rarely used with explore hence use definition 1
+# explore: ga_data_parsed {
+#   label: "Google Analytics Data"
+#   from: ri_events_from_ga
+#   view_name: ga_data_parsed
+#   extends: [dim_course]
+#   join: user_facts {
+#     relationship: many_to_one
+#     sql_on: ${ga_data_parsed.userssoguid} = ${user_facts.guid} ;;
+#   }
+#   join: dim_course {
+#     relationship: many_to_one
+#     sql_on: ${ga_data_parsed.coursekey} = ${dim_course.coursekey} ;;
+#   }
+#   join: dim_relative_to_start_date {
+#     relationship: many_to_one
+#     sql_on: datediff(days, ${olr_courses.begin_date_date}, ${ga_data_parsed.hit_date}) = ${dim_relative_to_start_date.days} ;;
+#   }
+# }
+
+#DEFINITION METHOD 1
+explore: ri_events_from_ga {
+  label: " DS: RI event data from GA"
   extends: [dim_course]
   join: user_facts {
     relationship: many_to_one
-    sql_on: ${ga_data_parsed.userssoguid} = ${user_facts.guid} ;;
+    sql_on: ${ri_events_from_ga.userssoguid} = ${user_facts.guid} ;;
   }
   join: dim_course {
     relationship: many_to_one
-    sql_on: ${ga_data_parsed.coursekey} = ${dim_course.coursekey} ;;
+    sql_on: ${ri_events_from_ga.coursekey} = ${dim_course.coursekey} ;;
   }
   join: dim_relative_to_start_date {
     relationship: many_to_one
-    sql_on: datediff(days, ${olr_courses.begin_date_date}, ${ga_data_parsed.hit_date}) = ${dim_relative_to_start_date.days} ;;
+    sql_on: datediff(days, ${olr_courses.begin_date_date}, ${ri_events_from_ga.hit_date}) = ${dim_relative_to_start_date.days} ;;
   }
 }
 
 
 explore: flat_studentinteractions_4m_ga
 {
-  label: "Flat Student Interactions"
+  label: "DS: Flat Student Interactions"
   extends: [dim_course]
   join: dim_course {   # we need the dim_start_date join from the dim_course explore
     relationship: many_to_one

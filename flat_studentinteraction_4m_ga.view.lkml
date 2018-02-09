@@ -3,7 +3,7 @@
 
 view: flat_studentinteractions_4m_ga {
   derived_table: {
-    explore_source: ga_data_parsed {
+    explore_source: ri_events_from_ga{
       column: userssoguid {}
       column: is_external { field: dim_filter.is_external }
       filters: {

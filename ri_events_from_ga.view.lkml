@@ -1836,27 +1836,32 @@ view: ri_events_from_ga {
           ${milady_procedural_tracker_launch_sum} ;;
     }
 
-    dimension: reading_page_view {
-      type: number
-      sql: ${datalayer_json}:readingPageView::string::int+1 ;;
-    }
-    measure: total_pages_viewed {
-      type: sum
-      sql: ${reading_page_view} ;;
-    }
+#     dimension: reading_page_view {
+#       type: number
+#       sql: ${datalayer_json}:readingPageView::string::int+1 ;;
+#     }
+
+#TODO calculate measures max_page_viewed, max_total_pages, actual_pages_viewed, page_reread_ratio
+    # measure: total_pages_viewed {
+    #   type: count
+    #   sql: ${reading_page_view} ;;
+    # }
     #we are assuming that pages viewed are read?
-    measure: total_pages_read {
-      type: sum
-      sql: ${reading_page_view} ;;
-    }
+    # measure: total_pages_read {
+    #   type: max
+    #   sql: ${reading_page_view} ;;
+    # }
 
-    dimension: reading_page_count {
-      type: number
-      sql: ${datalayer_json}:readingPageCount ;;
-    }
-    measure: total_pages {
-      type: sum
-      sql: ${reading_page_count} ;;
+  # measure: total_pages {
+  #   type: sum
+  #   sql: ${reading_page_count} ;;
 
-    }
+  # }
+
+
+
+#     dimension: reading_page_count {
+#       type: number
+#       sql: ${datalayer_json}:readingPageCount ;;
+#     }
 }

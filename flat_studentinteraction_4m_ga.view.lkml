@@ -17,8 +17,8 @@ view: flat_studentinteractions_4m_ga {
       column: coursekey {}
       column: localtime_timestamp_tz_time {}
       column: coretextisbn {}
-      column: reading_page_count {}
-      column: reading_page_view {}
+#       column: reading_page_count {}
+#       column: reading_page_view {}
       column: activitybuilder_launch_sum {}
       column: alg_launch_sum {}
       column: aplia_launch_sum {}
@@ -171,10 +171,10 @@ view: flat_studentinteractions_4m_ga {
       column: weblinks_activity_launch_sum {}
       column: weblinks_launch_sum {}
       column: youseeu_launch_sum {}
-      column: total_pages {}
-      column: total_pages_read {}
-      column: total_pages_viewed {}
-      column: intensity {}
+      # column: total_pages {}
+      # column: total_pages_read {}
+      # column: total_pages_viewed {}
+#       column: intensity {}
     }
 
     sql_trigger_value: select count(*) from raw_ga.ga_data_parsed ;;
@@ -659,21 +659,18 @@ view: flat_studentinteractions_4m_ga {
   }
   dimension: environment {}
   dimension: productplatform {}
+#
+#   dimension: reading_page_count {
+#     type: number
+#   }
+#   dimension: reading_page_view {
+#     type: number
+#   }
 
-  dimension: reading_page_count {
-    type: number
-  }
-  dimension: reading_page_view {
-    type: number
-  }
+#   dimension: intensity {
+#     type: number
+#   }
 
-  dimension: intensity {
-    type: number
-  }
-
-  dimension: total_pages {
-    type: number
-  }
   dimension: total_pages_read {
     type: number
   }
@@ -687,10 +684,5 @@ view: flat_studentinteractions_4m_ga {
     description: "Flag to identify real courses, rather than test/demo/internal"
     type: yesno
   }
-
-
-  #TODO calculate measures max_page_viewed, max_total_pages, actual_pages_viewed, page_reread_ratio
-
-
 
 }

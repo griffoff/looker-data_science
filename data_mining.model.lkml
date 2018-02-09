@@ -32,6 +32,8 @@ include: "/cube/dim_*.view.lkml"
 
 explore: ga_data_parsed {
   label: "Google Analytics Data"
+  from: ri_events_from_ga
+  view_name: ga_data_parsed
   extends: [dim_course]
   join: user_facts {
     relationship: many_to_one

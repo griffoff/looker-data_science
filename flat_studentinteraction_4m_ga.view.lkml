@@ -5,6 +5,11 @@ view: flat_studentinteractions_4m_ga {
   derived_table: {
     explore_source: ga_data_parsed {
       column: userssoguid {}
+      column: is_external { field: dim_filter.is_external }
+      filters: {
+        field: dim_filter.is_external
+        value: "Yes"
+      }
       column: daysname { field: dim_relative_to_start_date.daysname }
       column: session_count {}
       column: environment {}
@@ -675,6 +680,14 @@ view: flat_studentinteractions_4m_ga {
   dimension: total_pages_viewed {
     type: number
   }
+
+  #FILTERS TO TELL if course is real or not
+  dimension: is_external {
+    label: "** RECOMMENDED FILTERS ** Real Course (Yes / No)"
+    description: "Flag to identify real courses, rather than test/demo/internal"
+    type: yesno
+  }
+
 
   #TODO calculate measures max_page_viewed, max_total_pages, actual_pages_viewed, page_reread_ratio
 

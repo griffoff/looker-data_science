@@ -169,10 +169,23 @@ view: flat_studentinteractions_4m_ga {
       column: weblinks_activity_launch_sum {}
       column: weblinks_launch_sum {}
       column: youseeu_launch_sum {}
+      column: eventcategory {}
+      column: eventaction {}
       # column: total_pages {}
       # column: total_pages_read {}
       # column: total_pages_viewed {}
 #       column: intensity {}
+
+      #FILTERS
+      filters: {
+        field: ri_events_from_ga.eventcategory
+        value: "-NULL"
+      }
+      filters: {
+        field: ri_events_from_ga.eventaction
+        value: "-NULL"
+      }
+      #if course is real or not
       filters: {
         field: dim_filter.is_external
         value: "Yes"
@@ -180,6 +193,18 @@ view: flat_studentinteractions_4m_ga {
       filters: {
         field: olr_courses.course_key
         value: "-NULL"
+      }
+      filters: {
+        field: ri_events_from_ga.environment
+        value: "-%dev%,-%test%,-%qa%"
+      }
+      filters: {
+        field: ri_events_from_ga.productplatform
+        value: "-NULL"
+      }
+      filters: {
+        field: ri_events_from_ga.userrole
+        value: "-%dev%,-%test%,-%qa%"
       }
     }
 
@@ -691,6 +716,58 @@ view: flat_studentinteractions_4m_ga {
     label: "** RECOMMENDED FILTERS ** Real Course (Yes / No)"
     description: "Flag to identify real courses, rather than test/demo/internal"
     type: yesno
+  }
+
+
+
+  #MEASURES WHICH ARE AGGREGATES used for student activities
+  #FEATURES
+  measure: logins {
+    type: sum
+    sql: ${session_count} ;;
+  }
+
+  measure : highlights{
+    type : number
+    sql: sum(${highlights_create_sum} + sum(${highlights_launch_sum} ;;
+  }
+
+  measure: searches {
+    type: number
+    sql: sum(${search_launched_sum} + sum(${search_performed_sum}) ;;
+  }
+
+  measure: media{
+    type: number
+    sql: sum)${media_activity_launch_sum} + sum(${media_sum} ;;
+  }
+
+  measure: flashcards {
+    type: number
+    sql: sum(${flashcards_activity_launch_sum} + sum(${flashcards_launch_sum} + sum(${flashcards_view_sum} ;;
+  }
+
+  measure: notes {
+    type: number
+    sql: sum(${flashnotes_Launch_sum} + sum(${everNote_Launch_sum} + sum(${mynotes_launch_sum} + sum(${quicknote_create_sum} + sum(${quicknote_launch_sum};;
+  }
+
+  measure: attempt {
+    type: number
+    sql: sum(${assessment_activity_launch_sum} +sum(${assessment_activity_submitted_sum} + sum(${assessment_activity_started_sum}) + sum(${assessment_launch_sum} ;;
+  }
+
+  #TODO fix this error in intensity dimension
+  measure: intensity {}
+
+  measure: homework {
+    type: number
+    sql: sum(${homework_activity_launch_sum} + sum(${homework_launch_sum} + sum(${homework_started_sum} + sum(${homework_submitted_sum} + ${homework_sum}) ;;
+  }
+
+  measure: cnow {
+    type: number
+    sql: sum(${cnowhw_launch_sum} + sum(${cnowhw_preclass_ilrn_com_launch_sum} ;;
   }
 
 }

@@ -6,13 +6,11 @@ view: flat_studentinteractions_4m_ga {
     explore_source: ri_events_from_ga{
       column: userssoguid {}
       column: is_external { field: dim_filter.is_external }
-      filters: {
-        field: dim_filter.is_external
-        value: "Yes"
-      }
       column: daysname { field: dim_relative_to_start_date.daysname }
       column: session_count {}
       column: environment {}
+      column: hostname {}
+      column: userrole {}
       column: productplatform {}
       column: coursekey {}
       column: localtime_timestamp_tz_time {}
@@ -175,6 +173,14 @@ view: flat_studentinteractions_4m_ga {
       # column: total_pages_read {}
       # column: total_pages_viewed {}
 #       column: intensity {}
+      filters: {
+        field: dim_filter.is_external
+        value: "Yes"
+      }
+      filters: {
+        field: olr_courses.course_key
+        value: "-NULL"
+      }
     }
 
     sql_trigger_value: select count(*) from raw_ga.ga_data_parsed ;;
@@ -658,6 +664,8 @@ view: flat_studentinteractions_4m_ga {
     type: number
   }
   dimension: environment {}
+  dimension: hostname {}
+  dimension: userrole {}
   dimension: productplatform {}
 #
 #   dimension: reading_page_count {

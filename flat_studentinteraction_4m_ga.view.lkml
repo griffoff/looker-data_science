@@ -675,6 +675,10 @@ view: flat_studentinteractions_4m_ga {
   dimension: userrole {}
   dimension: productplatform {}
 
+  measure: count {
+    type: count
+  }
+
   #FILTERS TO TELL if course is real or not
   dimension: is_external {
     label: "** RECOMMENDED FILTERS ** Real Course (Yes / No)"

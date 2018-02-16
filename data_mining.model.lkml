@@ -7,6 +7,7 @@ include: "/cube/dims.model.lkml"
 #include: "/cube/source.model.lkml"
 #include: "/cube/ga_data_parsed.view.lkml"
 include: "/cube/dim_*.view.lkml"
+include: "/cube/additional_info.user_scores_daily.view.lkml"
 
 # # Select the views that should be a part of this model,
 # # and define the joins that connect them together.

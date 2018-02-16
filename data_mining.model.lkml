@@ -65,11 +65,20 @@ explore: ri_events_from_ga {
   }
   join: dim_course {
     relationship: many_to_one
+    type: inner
     sql_on: ${ri_events_from_ga.coursekey} = ${dim_course.coursekey} ;;
+  }
+  join: user_final_scores {
+    sql_on: (${dim_course.courseid}, ${ri_events_from_ga.userssoguid}) = (${user_final_scores.courseid}, ${user_final_scores.sso_guid}) ;;
+    relationship: many_to_one
   }
   join: dim_relative_to_start_date {
     relationship: many_to_one
     sql_on: datediff(days, ${olr_courses.begin_date_date}, ${ri_events_from_ga.hit_date}) = ${dim_relative_to_start_date.days} ;;
+  }
+  join: user_scores_daily {
+    sql_on: (${dim_course.courseid}, ${ri_events_from_ga.userssoguid}, ${dim_relative_to_start_date.days}) = (${user_final_scores.courseid}, ${user_final_scores.sso_guid}, ${user_scores_daily.day_of_course}) ;;
+    relationship: many_to_one
   }
 }
 

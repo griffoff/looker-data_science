@@ -15,8 +15,6 @@ view: flat_studentinteractions_4m_ga {
       column: coursekey {}
       column: localtime_timestamp_tz_time {}
       column: coretextisbn {}
-#       column: reading_page_count {}
-#       column: reading_page_view {}
       column: activitybuilder_launch_sum {}
       column: alg_launch_sum {}
       column: aplia_launch_sum {}
@@ -169,22 +167,7 @@ view: flat_studentinteractions_4m_ga {
       column: weblinks_activity_launch_sum {}
       column: weblinks_launch_sum {}
       column: youseeu_launch_sum {}
-      column: eventcategory {}
-      column: eventaction {}
-      # column: total_pages {}
-      # column: total_pages_read {}
-      # column: total_pages_viewed {}
-
-      #FILTERS
-      filters: {
-        field: ri_events_from_ga.eventcategory
-        value: "-NULL"
-      }
-      filters: {
-        field: ri_events_from_ga.eventaction
-        value: "-NULL"
-      }
-      #if course is real or not
+      column: pages_read {}
       filters: {
         field: dim_filter.is_external
         value: "Yes"
@@ -207,7 +190,7 @@ view: flat_studentinteractions_4m_ga {
       }
     }
 
-    sql_trigger_value: select count(*) from raw_ga.ga_data_parsed ;;
+    sql_trigger_value: select count(*) from dev.raw_ga.ga_data_parsed ;;
   }
   dimension: userssoguid {}
   dimension: coursekey {}
@@ -691,20 +674,6 @@ view: flat_studentinteractions_4m_ga {
   dimension: hostname {}
   dimension: userrole {}
   dimension: productplatform {}
-#
-#   dimension: reading_page_count {
-#     type: number
-#   }
-#   dimension: reading_page_view {
-#     type: number
-#   }
-
-  dimension: total_pages_read {
-    type: number
-  }
-  dimension: total_pages_viewed {
-    type: number
-  }
 
   #FILTERS TO TELL if course is real or not
   dimension: is_external {

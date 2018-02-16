@@ -1826,4 +1826,8 @@ view: ri_events_from_ga {
 #       type: number
 #       sql: ${datalayer_json}:readingPageCount ;;
 #     }
+
+  measure: count {
+    drill_fields: [productplatform, visit_start_time, hits_time, hits_hitnumber, eventaction, eventcategory, datalayer_json, url]
+  }
 }

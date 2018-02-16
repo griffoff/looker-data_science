@@ -174,7 +174,6 @@ view: flat_studentinteractions_4m_ga {
       # column: total_pages {}
       # column: total_pages_read {}
       # column: total_pages_viewed {}
-#       column: intensity {}
 
       #FILTERS
       filters: {
@@ -700,10 +699,6 @@ view: flat_studentinteractions_4m_ga {
 #     type: number
 #   }
 
-#   dimension: intensity {
-#     type: number
-#   }
-
   dimension: total_pages_read {
     type: number
   }
@@ -723,51 +718,64 @@ view: flat_studentinteractions_4m_ga {
   #MEASURES WHICH ARE AGGREGATES used for student activities
   #FEATURES
   measure: logins {
-    type: sum
-    sql: ${session_count} ;;
+    type: number
+    sql: sum(${session_count}) ;;
   }
 
   measure : highlights{
     type : number
-    sql: sum(${highlights_create_sum} + sum(${highlights_launch_sum} ;;
+    sql: sum(${highlights_create_sum}) + sum(${highlights_launch_sum}) ;;
   }
 
   measure: searches {
     type: number
-    sql: sum(${search_launched_sum} + sum(${search_performed_sum}) ;;
+    sql: sum(${search_launched_sum}) + sum(${search_performed_sum}) ;;
   }
 
   measure: media{
     type: number
-    sql: sum)${media_activity_launch_sum} + sum(${media_sum} ;;
+    sql: sum(${media_activity_launch_sum}) + sum(${media_sum}) ;;
   }
 
   measure: flashcards {
     type: number
-    sql: sum(${flashcards_activity_launch_sum} + sum(${flashcards_launch_sum} + sum(${flashcards_view_sum} ;;
+    sql: sum(${flashcards_activity_launch_sum}) + sum(${flashcards_launch_sum})  + sum(${flashcards_view_sum})  ;;
   }
 
   measure: notes {
     type: number
-    sql: sum(${flashnotes_Launch_sum} + sum(${everNote_Launch_sum} + sum(${mynotes_launch_sum} + sum(${quicknote_create_sum} + sum(${quicknote_launch_sum};;
+    sql: sum(${flashnotes_Launch_sum})  + sum(${everNote_Launch_sum})  + sum(${mynotes_launch_sum})  + sum(${quicknote_create_sum})  + sum(${quicknote_launch_sum}) ;;
   }
 
   measure: attempt {
     type: number
-    sql: sum(${assessment_activity_launch_sum} +sum(${assessment_activity_submitted_sum} + sum(${assessment_activity_started_sum}) + sum(${assessment_launch_sum} ;;
+    sql: sum(${assessment_activity_launch_sum})  +sum(${assessment_activity_submitted_sum})  + sum(${assessment_activity_started_sum}) + sum(${assessment_launch_sum})  ;;
   }
-
-  #TODO fix this error in intensity dimension
-  measure: intensity {}
 
   measure: homework {
     type: number
-    sql: sum(${homework_activity_launch_sum} + sum(${homework_launch_sum} + sum(${homework_started_sum} + sum(${homework_submitted_sum} + ${homework_sum}) ;;
+    sql: sum(${homework_activity_launch_sum})  + sum(${homework_launch_sum} ) + sum(${homework_started_sum})  + sum(${homework_submitted_sum})  + sum(${homework_sum}) ;;
   }
 
   measure: cnow {
     type: number
-    sql: sum(${cnowhw_launch_sum} + sum(${cnowhw_preclass_ilrn_com_launch_sum} ;;
+    sql: sum(${cnowhw_launch_sum})  + sum(${cnowhw_preclass_ilrn_com_launch_sum})  ;;
   }
+
+  measure: reading {
+    type: number
+    sql: ${reading_activity_launch_sum} + ${reading_activity_sum} + ${reading_activity_view_sum} + ${reading_Launch_sum} + ${reading_view_sum}  ;;
+  }
+
+  measure: total_time_in_mindtap {
+    type: sum
+    sql: ${time_in_mindtap_sum} ;;
+  }
+
+  measure: intensity {
+    type : number
+    sql: ${logins} + ${highlights} + ${searches} + ${media} + ${flashcards} + ${notes} + ${attempt} + ${homework} + ${cnow} + ${reading};;
+  }
+
 
 }

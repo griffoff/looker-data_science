@@ -62,7 +62,7 @@ view: rich_student_interactions {
     type: number
   }
   dimension: daysname {
-    label: "Flat Studentinteractions 4m Ga Course / Section Details Days Relative to Course Start Date"
+    label: "Days Relative to Course Start Date"
     value_format: "\D\a\y 0"
     type: number
   }

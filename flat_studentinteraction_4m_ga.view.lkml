@@ -186,7 +186,7 @@ view: flat_studentinteractions_4m_ga {
       }
       filters: {
         field: ri_events_from_ga.userrole
-        value: "-%dev%,-%test%,-%qa%"
+        value: "STUDENT,Student,-%dev%,-%test%,-%qa%"
       }
     }
 

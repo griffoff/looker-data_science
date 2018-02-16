@@ -83,7 +83,7 @@ explore: ri_events_from_ga {
   }
 }
 
-
+# 1st level of flattening
 explore: flat_studentinteractions_4m_ga
 {
   label: "DS: Flat Student Interactions"
@@ -92,5 +92,10 @@ explore: flat_studentinteractions_4m_ga
     relationship: many_to_one
     sql_on: ${flat_studentinteractions_4m_ga.coursekey} = ${dim_course.coursekey} ;;
   }
+
+}
+
+#2nd level of flattening
+explore: rich_student_interactions {
 
 }

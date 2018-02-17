@@ -22,6 +22,7 @@ view: rich_student_interactions {
       column: cnow {}
       column: daysname {}
     }
+    sql_trigger_value: select count(*) from flat_studentinteractions_4m_ga ;;
   }
   dimension: coursekey {}
   dimension: userssoguid {}

@@ -737,7 +737,7 @@ view: flat_studentinteractions_4m_ga {
 
   measure: reading {
     type: number
-    sql: ${reading_activity_launch_sum} + ${reading_activity_sum} + ${reading_activity_view_sum} + ${reading_Launch_sum} + ${reading_view_sum}  ;;
+    sql: sum(${reading_activity_launch_sum}) + sum(${reading_activity_sum}) + sum(${reading_activity_view_sum}) + sum(${reading_Launch_sum}) + sum(${reading_view_sum})  ;;
   }
 
   measure: total_time_in_mindtap {

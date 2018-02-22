@@ -9,31 +9,9 @@ include: "/cube/dims.model.lkml"
 include: "/cube/dim_*.view.lkml"
 include: "/cube/additional_info.user_scores_daily.view.lkml"
 
-# # Select the views that should be a part of this model,
-# # and define the joins that connect them together.
-#
-# explore: order_items {
-#   join: orders {
-#     relationship: many_to_one
-#     sql_on: ${orders.id} = ${order_items.order_id} ;;
-#   }
-#
-#   join: users {
-#     relationship: many_to_one
-#     sql_on: ${users.id} = ${orders.user_id} ;;
-#   }
-# }
-
-# explore: ga_data_parsed2 {
-#   extends: [ga_data_parsed]
-#   from: ga_data_parsed
-#   view_label: "Google Analytics Data"
-#
-# }
-
-
-
-
+datagroup: ga_events_datagroup {
+  sql_trigger: select count(*) from dev.raw_ga.ga_data_parsed ;;
+}
 
 
 #DEFINITION METHOD 2 from is rarely used with explore hence use definition 1
@@ -78,7 +56,7 @@ explore: ri_events_from_ga {
     sql_on: datediff(days, ${olr_courses.begin_date_date}, ${ri_events_from_ga.hit_date}) = ${dim_relative_to_start_date.days} ;;
   }
   join: user_scores_daily {
-    sql_on: (${dim_course.courseid}, ${ri_events_from_ga.userssoguid}, ${dim_relative_to_start_date.days}) = (${user_final_scores.courseid}, ${user_final_scores.sso_guid}, ${user_scores_daily.day_of_course}) ;;
+    sql_on: (${dim_course.courseid}, ${ri_events_from_ga.userssoguid}, ${dim_relative_to_start_date.days}) = (${user_scores_daily.courseid}, ${user_scores_daily.sso_guid}, ${user_scores_daily.day_of_course}) ;;
     relationship: many_to_one
   }
 }
@@ -92,10 +70,19 @@ explore: flat_studentinteractions_4m_ga
     relationship: many_to_one
     sql_on: ${flat_studentinteractions_4m_ga.coursekey} = ${dim_course.coursekey} ;;
   }
+  join: user_scores_daily {
+    sql_on: (${dim_course.courseid}, ${flat_studentinteractions_4m_ga.userssoguid}, ${flat_studentinteractions_4m_ga.daysname}) = (${user_scores_daily.courseid}, ${user_scores_daily.sso_guid}, ${user_scores_daily.day_of_course}) ;;
+    relationship: many_to_one
+  }
+  join: user_final_scores {
+    sql_on: (${dim_course.courseid}, ${flat_studentinteractions_4m_ga.userssoguid}) = (${user_final_scores.courseid}, ${user_final_scores.sso_guid}) ;;
+    relationship: many_to_one
+  }
 
 }
 
 #2nd level of flattening
 explore: rich_student_interactions {
-
 }
+
+explore: page_reads {}

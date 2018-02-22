@@ -4,6 +4,7 @@
 view: flat_studentinteractions_4m_ga {
   derived_table: {
     explore_source: ri_events_from_ga{
+      column: pk_id {}
       column: userssoguid {}
       column: is_external { field: dim_filter.is_external }
       column: daysname { field: dim_relative_to_start_date.daysname }
@@ -190,7 +191,16 @@ view: flat_studentinteractions_4m_ga {
       }
     }
 
-    sql_trigger_value: select count(*) from dev.raw_ga.ga_data_parsed ;;
+    datagroup_trigger: ga_events_datagroup
+  }
+  dimension: pk_id {
+    primary_key: yes
+    hidden: yes
+  }
+  measure: pk_id_min {
+    type: min
+    sql: ${pk_id} ;;
+    hidden: yes
   }
   dimension: userssoguid {}
   dimension: coursekey {}

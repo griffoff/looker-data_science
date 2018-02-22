@@ -14,6 +14,12 @@ view: ri_events_from_ga {
          else 0 end/(1000*60*60*24)  ;;
   }
 
+  measure: pk_id {
+    type: min
+    sql: ${ga_data_parsed_id} ;;
+    hidden: yes
+  }
+
   measure: time_in_mindtap_sum {
     type: sum
     sql: ${time_in_mindtap} ;;

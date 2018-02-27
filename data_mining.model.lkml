@@ -70,6 +70,10 @@ explore: flat_studentinteractions_4m_ga
     relationship: many_to_one
     sql_on: ${flat_studentinteractions_4m_ga.coursekey} = ${dim_course.coursekey} ;;
   }
+  join: dim_relative_to_start_date {
+    relationship: many_to_one
+    sql_on: ${flat_studentinteractions_4m_ga.daysname} = ${dim_relative_to_start_date.daysname} ;;
+  }
   join: user_scores_daily {
     sql_on: (${dim_course.courseid}, ${flat_studentinteractions_4m_ga.userssoguid}, ${flat_studentinteractions_4m_ga.daysname}) = (${user_scores_daily.courseid}, ${user_scores_daily.sso_guid}, ${user_scores_daily.day_of_course}) ;;
     relationship: many_to_one
@@ -83,6 +87,38 @@ explore: flat_studentinteractions_4m_ga
 
 #2nd level of flattening
 explore: rich_student_interactions {
+  label: "DS: Enriched Student Interactions"
+  extends: [dim_course]
+  join: dim_course {   # we need the dim_start_date join from the dim_course explore
+    relationship: many_to_one
+    sql_on: ${rich_student_interactions.coursekey} = ${dim_course.coursekey} ;;
+  }
+  join: user_final_scores {
+    sql_on:  (${dim_course.courseid}, ${rich_student_interactions.userssoguid}) =( ${user_final_scores.courseid}, ${user_final_scores.sso_guid});;
+    relationship: one_to_many
+  }
+  join: user_scores_daily {
+    sql_on: (${user_final_scores.courseid}, ${user_final_scores.sso_guid}, ${rich_student_interactions.daysname}) = (${user_scores_daily.courseid}, ${user_scores_daily.sso_guid}, ${user_scores_daily.day_of_course}) ;;
+    relationship: one_to_many
+  }
 }
 
 explore: page_reads {}
+
+explore: course {
+  label: "DS: Courses"
+  extends: [dim_course]
+  from: dim_course
+  view_name: dim_course
+
+  join: user_final_scores {
+    sql_on:  ${dim_course.courseid} = ${user_final_scores.courseid};;
+    relationship: one_to_many
+  }
+
+  join: user_scores_daily {
+    sql_on: (${user_final_scores.courseid}, ${user_final_scores.sso_guid}) = (${user_scores_daily.courseid}, ${user_scores_daily.sso_guid}) ;;
+    relationship: one_to_many
+  }
+
+}

@@ -11,7 +11,7 @@ view: clickstream_analysis {
       column: eventaction {}
       column: eventcategory {}
       column: activityuri {}
-      #column: interaction {}
+      derived_column: interaction {}
       filters: {
         field: ri_events_from_ga.coursekey
         value: "-NULL"
@@ -60,13 +60,15 @@ view: clickstream_analysis {
     label: "User Event Data Activityuri"
   }
 
-#   dimension: interaction {
-#     label: "Interaction With Platform Feature"
-#     type: string
-#     sql: case
-#               when eventAction ilike 'view' then lower(concat(eventaction, eventCategory))
-#               when eventCategory  ilike 'activity'
-#                     then lower(concat(eventAction, split_part(activityuri, ':', 3)))
-#               else lower(eventCategory) end  ;;
-#   }
+  dimension: interaction {
+    label: "Interaction With Platform Feature"
+    type: string
+    sql: InitCap((
+            case    when eventAction ilike 'view'
+                        then lower(concat(concat(eventaction, ' '), eventCategory))
+                    when eventCategory  ilike 'activity'
+                        then lower(concat(concat(eventAction, ' '), split_part(activityuri, ':', 3)))
+                    else lower(eventCategory) end
+            ))  ;;
+  }
 }

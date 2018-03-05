@@ -86,3 +86,5 @@ explore: rich_student_interactions {
 }
 
 explore: page_reads {}
+
+explore : clickstream_analysis{}

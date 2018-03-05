@@ -22,12 +22,6 @@ view: rich_student_interactions {
       column: homework {}
       column: cnow {}
       column: daysname {}
-      column: final_score { field: user_final_scores.final_score }
-      column: final_score_category { field: user_final_scores.final_score_category }
-      column: daily_score { field: user_scores_daily.daily_score }
-      column: daily_score_category { field: user_scores_daily.daily_score_category }
-      column: to_date_score { field: user_scores_daily.to_date_score }
-      column: to_date_score_category { field: user_scores_daily.to_date_score_category }
     }
     sql_trigger_value: select count(*) from ${flat_studentinteractions_4m_ga.SQL_TABLE_NAME} ;;
   }
@@ -37,53 +31,59 @@ view: rich_student_interactions {
   }
   dimension: coursekey {}
   dimension: userssoguid {}
-  dimension: logins {
-    type: number
+  measure: logins {
+    type: average
   }
-  dimension: highlights {
-    type: number
+  measure: highlights {
+    type: average
   }
-  dimension: reading {
-    type: number
+  measure: reading {
+    type: average
   }
   dimension: total_time_in_mindtap {
     type: number
+    hidden: yes
   }
-  dimension: searches {
-    type: number
+
+  measure: time_in_mindtap_sum {
+    type: sum
+    sql: ${total_time_in_mindtap} ;;
   }
-  dimension: media {
-    type: number
+  measure: avg_time_in_mindtap {
+    type: average
+    sql: ${total_time_in_mindtap} ;;
   }
-  dimension: flashcards {
-    type: number
+  measure: searches {
+    type: average
   }
-  dimension: notes {
-    type: number
+  measure: media {
+    type: average
   }
-  dimension: attempt {
-    type: number
+  measure: flashcards {
+    type: average
   }
-  dimension: intensity {
-    type: number
+  measure: notes {
+    type: average
   }
-  dimension: homework {
-    type: number
+  measure: attempt {
+    type: average
   }
-  dimension: cnow {
-    type: number
+  measure: intensity {
+    type: average
+  }
+  measure: homework {
+    type: average
+  }
+  measure: cnow {
+    type: average
   }
   dimension: daysname {
     label: "Days Relative to Course Start Date"
     value_format: "\D\a\y 0"
     type: number
   }
-  dimension: final_score {group_label: "Scores"}
-  dimension: final_score_category {group_label: "Scores"}
-  dimension: daily_score {group_label: "Scores"}
-  dimension: daily_score_category {group_label: "Scores"}
-  dimension: to_date_score {group_label: "Scores"}
-  dimension: to_date_score_category {group_label: "Scores"}
 
-  measure: count {}
+  measure: count {
+    type: count
+  }
 }

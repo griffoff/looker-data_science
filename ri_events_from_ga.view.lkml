@@ -3,6 +3,10 @@
 view: ri_events_from_ga {
   extends: [ga_data_parsed]
 
+  dimension: sessionid {
+    hidden: no
+  }
+
 # Dimensions and measures for RI events
 # Time in MT
   dimension:  time_in_mindtap {

@@ -7,14 +7,14 @@ view: clickstream_analysis {
       column: sessionid {}
       column: userssoguid {}
       column: coursekey {}
-      column: localtime_timestamp_tz_time {}
+      column: localtime_timestamp_tz_raw {}
       column: eventaction {}
       column: eventcategory {}
       column: activityuri {}
       #column: interaction {}
       filters: {
         field: ri_events_from_ga.coursekey
-        value: "MTPQXFXPFQ77,-NULL"
+        value: "-NULL"
       }
       filters: {
         field: ri_events_from_ga.userssoguid
@@ -33,6 +33,7 @@ view: clickstream_analysis {
         value: "Yes"
       }
     }
+    datagroup_trigger: ga_events_datagroup
   }
   dimension: sessionid {
     label: "User Event Data Sessionid"
@@ -43,9 +44,11 @@ view: clickstream_analysis {
   dimension: coursekey {
     label: "User Event Data Coursekey"
   }
-  dimension: localtime_timestamp_tz_time {
-    label: "User Event Data  Time"
-    type: date_time
+  dimension_group: localtime_timestamp_tz_raw {
+    group_label: "Local Time"
+    label: ""
+    type: time
+    timeframes: [raw,time, date, hour_of_day, day_of_week, time_of_day, month, year, week_of_year]
   }
   dimension: eventaction {
     label: "User Event Data Eventaction"

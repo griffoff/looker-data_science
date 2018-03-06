@@ -7,11 +7,13 @@ view: clickstream_analysis {
       column: sessionid {}
       column: userssoguid {}
       column: coursekey {}
-      column: localtime_timestamp_tz_raw {}
-      column: eventaction {}
-      column: eventcategory {}
-      column: activityuri {}
-      derived_column: interaction {}
+      #column: localtime_timestamp_tz_raw {}
+      column: clickstream {}
+      column: session_start_time {
+        field: ri_events_from_ga.earliest_time
+      }
+
+
       filters: {
         field: ri_events_from_ga.coursekey
         value: "-NULL"
@@ -44,31 +46,15 @@ view: clickstream_analysis {
   dimension: coursekey {
     label: "User Event Data Coursekey"
   }
-  dimension_group: localtime_timestamp_tz_raw {
-    group_label: "Local Time"
+
+  dimension_group: session_start_time {
+    group_label: "Session Start Local Time"
     label: ""
     type: time
     timeframes: [raw,time, date, hour_of_day, day_of_week, time_of_day, month, year, week_of_year]
   }
-  dimension: eventaction {
-    label: "User Event Data Eventaction"
-  }
-  dimension: eventcategory {
-    label: "User Event Data Eventcategory"
-  }
-  dimension: activityuri {
-    label: "User Event Data Activityuri"
-  }
 
-  dimension: interaction {
-    label: "Interaction With Platform Feature"
-    type: string
-    sql: InitCap((
-            case    when eventAction ilike 'view'
-                        then lower(concat(concat(eventaction, ' '), eventCategory))
-                    when eventCategory  ilike 'activity'
-                        then lower(concat(concat(eventAction, ' '), split_part(activityuri, ':', 3)))
-                    else lower(eventCategory) end
-            ))  ;;
+  dimension: clickstream {
+      label: "Clickstream"
   }
 }

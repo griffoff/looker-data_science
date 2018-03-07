@@ -17,6 +17,10 @@ view: ri_events_from_ga {
             )) ;;
   }
 
+  measure: interaction_count{
+    type: count
+    drill_fields: [interaction]
+  }
 
   measure: clickstream {
     type: string

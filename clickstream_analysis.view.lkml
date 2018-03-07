@@ -62,4 +62,10 @@ view: clickstream_analysis {
   dimension: clickstream {
       label: "Clickstream"
   }
+  dimension: interaction {}
+
+  measure: interaction_count{
+    type: count
+    drill_fields: [interaction]
+  }
 }

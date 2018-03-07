@@ -7,7 +7,7 @@ view: clickstream_analysis {
       column: sessionid {}
       column: userssoguid {}
       column: coursekey {}
-      #column: localtime_timestamp_tz_raw {}
+      column: localtime_timestamp_tz_raw {}
       column: clickstream {}
       column: interaction {}
       filters: {
@@ -39,6 +39,10 @@ view: clickstream_analysis {
         field: dim_filter.is_external
         value: "Yes"
       }
+      filters: {
+        field: ri_events_from_ga.localtime_timestamp_tz_time
+        value: "NOT NULL"
+      }
     }
     datagroup_trigger: ga_events_datagroup
   }
@@ -61,11 +65,5 @@ view: clickstream_analysis {
 
   dimension: clickstream {
       label: "Clickstream"
-  }
-  dimension: interaction {}
-
-  measure: interaction_count{
-    type: count
-    drill_fields: [interaction]
   }
 }

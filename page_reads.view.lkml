@@ -29,10 +29,18 @@ view: page_reads {
   dimension: datalayer_json {}
   dimension: pages_in_book {type:number}
   dimension: page_no {type:number}
-  dimension: hit_time {}
+  dimension_group: hit_time {
+    group_label: "Page Read Time"
+    label: "Page Read"
+    type: time
+    timeframes: [raw,time,minute,hour,hour_of_day, date,month,year]
+  }
+
   dimension: duration_to_next_page_secs  {
+    label: "Time to next page"
     type:number
-    sql: duration_to_next_page_secs::float ;;
+    sql: duration_to_next_page_secs::float / 60 / 60 / 24 ;;
+    value_format_name: duration_hms
   }
 
   measure: pages_with_events {
@@ -47,12 +55,12 @@ view: page_reads {
 
   measure: earliest_read {
     type: min
-    sql: ${hit_time} ;;
+    sql: ${hit_time_raw} ;;
   }
 
   measure: latest_read {
     type: max
-    sql: ${hit_time} ;;
+    sql: ${hit_time_raw} ;;
   }
 
   measure: avg_read_time {

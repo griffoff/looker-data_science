@@ -112,6 +112,8 @@ explore: page_reads {
   }
 }
 
+explore : clickstream_analysis{}
+
 explore: course {
   label: "DS: Courses"
   extends: [dim_course]

@@ -3,6 +3,34 @@
 view: ri_events_from_ga {
   extends: [ga_data_parsed]
 
+  dimension: sessionid {
+    hidden: no
+  }
+
+  dimension: interaction {
+    sql:  InitCap((
+            case    when ${eventaction} ilike 'view'
+                        then lower(concat(concat(${eventaction}, space(1)), ${eventcategory}))
+                    when ${eventcategory}  ilike 'activity'
+                        then lower(concat(concat(${eventaction}, space(1)), split_part(${activityuri}, ':', 3)))
+                    else lower(${eventcategory}) end
+            )) ;;
+  }
+
+  measure: interaction_count{
+    type: count
+    drill_fields: [interaction]
+  }
+
+  measure: clickstream {
+    type: string
+    sql: listagg(${interaction}, ',') within group (order by ${localtime_timestamp_tz_raw})  ;;
+  }
+  measure: earliest_time {
+    type: number
+    sql: min(${localtime_timestamp_tz_raw}) ;;
+  }
+
 # Dimensions and measures for RI events
 # Time in MT
   dimension:  time_in_mindtap {

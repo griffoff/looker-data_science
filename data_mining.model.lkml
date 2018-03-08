@@ -7,7 +7,7 @@ include: "/cube/dims.model.lkml"
 #include: "/cube/source.model.lkml"
 #include: "/cube/ga_data_parsed.view.lkml"
 include: "/cube/dim_*.view.lkml"
-include: "/cube/additional_info.user_scores_daily.view.lkml"
+include: "/cube/additional_info.*.view.lkml"
 
 datagroup: ga_events_datagroup {
   sql_trigger: select count(*) from dev.raw_ga.ga_data_parsed ;;
@@ -103,7 +103,14 @@ explore: rich_student_interactions {
   }
 }
 
-explore: page_reads {}
+explore: page_reads {
+  label: "DS: Page Reads"
+  extends: [dim_course]
+  join: dim_course {   # we need the dim_start_date join from the dim_course explore
+    relationship: many_to_one
+    sql_on: ${page_reads.coursekey} = ${dim_course.coursekey} ;;
+  }
+}
 
 explore : clickstream_analysis{}
 

@@ -3,7 +3,7 @@ connection: "snowflake_prod"
 include: "*.view.lkml"         # include all views in this project
 include: "*.dashboard.lookml"  # include all dashboards in this project
 include: "/core/common.lkml"
-include: "/cube/dims.model.lkml"
+include: "/cube/dims.lkml"
 #include: "/cube/source.model.lkml"
 #include: "/cube/ga_data_parsed.view.lkml"
 include: "/cube/dim_*.view.lkml"

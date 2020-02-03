@@ -1,13 +1,13 @@
 connection: "snowflake_prod"
 
 include: "*.view.lkml"         # include all views in this project
-include: "*.dashboard.lookml"  # include all dashboards in this project
-include: "/core/common.lkml"
-include: "/cube/dims.lkml"
+#include: "*.dashboard.lookml"  # include all dashboards in this project
+include: "//core/common.lkml"
+include: "//cube/dims.lkml"
 #include: "/cube/source.model.lkml"
 #include: "/cube/ga_data_parsed.view.lkml"
-include: "/cube/dim_*.view.lkml"
-include: "/cube/additional_info.*.view.lkml"
+include: "//cube/dim_*.view.lkml"
+include: "//cube/additional_info.*.view.lkml"
 
 datagroup: ga_events_datagroup {
   sql_trigger: select count(*) from dev.raw_ga.ga_data_parsed ;;

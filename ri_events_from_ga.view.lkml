@@ -1,4 +1,4 @@
-  include: "/cube/raw_ga.ga_data_parsed.view.lkml"
+  include: "//cube/raw_ga.ga_data_parsed.view.lkml"
 
 view: ri_events_from_ga {
   extends: [ga_data_parsed]

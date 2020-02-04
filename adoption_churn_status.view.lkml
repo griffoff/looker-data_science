@@ -1,4 +1,6 @@
-explore: adoption_churn_status {}
+explore: adoption_churn_status {
+  label: "DS: Digital Adoption Churn"
+}
 
 view: adoption_churn_status {
   derived_table: {

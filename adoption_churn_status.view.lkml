@@ -14,6 +14,11 @@ view: adoption_churn_status {
     drill_fields: [detail*]
   }
 
+  measure: count_distinct_adoptions {
+    type: count_distinct
+    sql: ${adoption_key} ;;
+  }
+
   dimension: adoption_key {
     type: string
     label: "Digital Adoption key"
@@ -41,6 +46,50 @@ view: adoption_churn_status {
     type: number
     sql: ${TABLE}."FY19_COURSEWARE_CONSUMED_UNITS" ;;
   }
+
+  dimension: fy18_courseware_consumed_units_buckets {
+    type: tier
+    tiers: [-100, 0 ,10, 50, 100, 250, 500]
+    style: integer
+    sql: ${fy18_courseware_consumed_units} ;;
+  }
+
+  measure: churn_count_18 {
+    type: sum
+    sql: ${did_churn_18} ;;
+  }
+
+  measure: churn_proportion_18 {
+    type: number
+    value_format_name: percent_0
+    sql: ${churn_count_18}/${count} ;;
+  }
+
+
+
+  dimension: fy19_courseware_consumed_units_buckets {
+    type: tier
+    tiers: [-100, 0 ,10, 50, 100, 250, 500]
+    style: integer
+    sql: ${fy19_courseware_consumed_units} ;;
+  }
+
+#   measure: churn_count_19 {
+#     type: sum
+#     sql: ${did_churn_19} ;;
+#   }
+#
+#   measure: churn_proportion_19 {
+#     type: number
+#     value_format_name: percent_0
+#     sql: ${churn_count_19}/${count} ;;
+#   }
+
+measure: churn_count_19 {
+  type: count_distinct
+  sql: case when ${did_churn_19} = 1 then ${adoption_key} else NULL end  ;;
+  drill_fields: [detail*]
+}
 
   dimension: instructor_guid {
     type: string

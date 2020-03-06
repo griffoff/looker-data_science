@@ -191,7 +191,8 @@ view: flat_studentinteractions_4m_ga {
       }
     }
 
-    datagroup_trigger: ga_events_datagroup
+    #datagroup_trigger: ga_events_datagroup
+    #persist_for: "24 hours"
   }
   dimension: pk_id {
     primary_key: yes
